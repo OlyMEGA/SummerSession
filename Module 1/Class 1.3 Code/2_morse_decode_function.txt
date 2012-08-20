@@ -1,0 +1,104 @@
+// Morse lookup
+void morse(char theChar)
+{
+    switch (theChar)
+    {
+        case 'a' : case 'A':
+             dit(); dah(); break;                    // .-
+        case 'b' : case 'B':
+             dah(); dit(); dit(); dit(); break;      // -...
+        case 'c' : case 'C':
+             dah(); dit(); dah(); dit(); break;      // -.-.
+        case 'd' : case 'D':
+             dah(); dit(); dit(); break;             // -..
+        case 'e' : case 'E':
+             dit(); break;                           // .
+        case 'f' : case 'F':
+             dit(); dit(); dah(); dit(); break;      // ..-.
+        case 'g' : case 'G':
+             dah(); dah(); dit(); break;             // --.
+        case 'h' : case 'H':
+             dit(); dit(); dit(); dit(); break;      // ....
+        case 'i' : case 'I':
+             dit(); dit(); break;                    // ..
+        case 'j' : case 'J':
+             dit(); dah(); dah(); dah(); break;      // .---
+        case 'k' : case 'K':
+             dah(); dit(); dah(); break;             // -.-
+        case 'l' : case 'L':
+             dit(); dah(); dit(); dit(); break;      // .-..
+        case 'm' : case 'M':
+             dah(); dah(); break;                    // --
+        case 'n' : case 'N':
+             dah(); dit(); break;                    // -.
+        case 'o' : case 'O':
+             dah(); dah(); dah(); break;             // ---
+        case 'p' : case 'P':
+             dit(); dah(); dah(); dit(); break;      // .--.
+        case 'q' : case 'Q':
+             dah(); dah(); dit(); dah(); break;      // --.-
+        case 'r' : case 'R':
+             dit(); dah(); dah(); break;             // .-.
+        case 's' : case 'S':
+             dit(); dit(); dit(); break;             // ...
+        case 't' : case 'T':
+             dah(); break;                           // -
+        case 'u' : case 'U':
+             dit(); dit(); dah(); break;             // ..-
+        case 'v' : case 'V':
+             dit(); dit(); dit(); dah(); break;      // ...-
+        case 'w' : case 'W':
+             dit(); dah(); dah(); break;             // .--
+        case 'x' : case 'X':
+             dah(); dit(); dit(); dah(); break;      // -..-
+        case 'y' : case 'Y':
+             dah(); dit(); dah(); dah(); break;      // -.--
+        case 'z' : case 'Z':
+             dah(); dah(); dit(); dit(); break;      // --..
+            
+        case ',':
+             dah(); dah(); dit(); dit(); dah(); dah(); break;    // --..--
+        case '.':
+             dit(); dah(); dit(); dah(); dit(); dah(); break;    // .-.-.-
+        case '?':
+             dit(); dit(); dah(); dah(); dit(); dit(); break;    // ..--..
+        case ':':
+             dah(); dah(); dah(); dit(); dit(); dit(); break;    // ---...
+        case '/':
+             dah(); dit(); dit(); dah(); dit(); break;           // -..-.
+        case '(' : case ')':
+             dah(); dit(); dah(); dah(); dit(); dah(); break;    // -.--.-
+        case '-':
+             dah(); dit(); dit(); dit(); dit(); dah(); break;    // -....-
+
+        case '0':
+            dah(); dah(); dah(); dah(); dah(); break; // -----
+        case '1':
+            dit(); dah(); dah(); dah(); dah(); break; // .----
+        case '2':
+            dit(); dit(); dah(); dah(); dah(); break; // ..---
+        case '3':
+            dit(); dit(); dit(); dah(); dah(); break; // ...--
+        case '4':
+            dit(); dit(); dit(); dit(); dah(); break; // ....-
+        case '5':
+            dit(); dit(); dit(); dit(); dit(); break; // .....
+        case '6':
+            dah(); dit(); dit(); dit(); dit(); break; // -....
+        case '7':
+            dah(); dah(); dit(); dit(); dit(); break; // --...
+        case '8':
+            dah(); dah(); dah(); dit(); dit(); break; // ---..
+        case '9':
+            dah(); dah(); dah(); dah(); dit(); break; // ----.
+        case ' ':
+           space(); break; // Space between words
+        default:
+            break;
+    }
+
+    if (theChar != ' ') {
+      endLetter();
+    }
+}
+

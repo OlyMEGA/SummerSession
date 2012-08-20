@@ -1,0 +1,16 @@
+//============================================
+// Sketch 1.3_1.1:
+//============================================
+void setup()
+{
+    Serial.begin(9600);
+    Serial.println("Starting up…");
+}
+
+void loop()
+{
+    Serial.println("hello world!");
+    delay(1000);
+}
+// Functions Not Needed
+//============================================

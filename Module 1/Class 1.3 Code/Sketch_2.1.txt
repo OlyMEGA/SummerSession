@@ -1,0 +1,72 @@
+//============================================
+// Sketch 1.3_2.1:
+//============================================
+void loop()
+
+{
+    // S
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+    
+    delay(ditDuration);
+
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+    
+    delay(ditDuration);
+
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+
+    // End Letter
+    delay(dahDuration);
+    
+    // O
+    digitalWrite(ledPin, HIGH);
+    delay(dahDuration);
+    digitalWrite(ledPin, LOW);   
+    
+    delay(ditDuration);
+
+    digitalWrite(ledPin, HIGH);
+    delay(dahDuration);
+    digitalWrite(ledPin, LOW);   
+
+    delay(ditDuration);
+
+    digitalWrite(ledPin, HIGH);
+    delay(dahDuration);
+    digitalWrite(ledPin, LOW);   
+
+    // End Letter
+    delay(dahDuration);
+
+    // S
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+
+    delay(ditDuration);
+
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+
+    delay(ditDuration);
+
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+
+    // End Letter
+    delay(dahDuration);
+
+    delay(1000);
+}
+
+// Functions Not Needed
+//============================================
+

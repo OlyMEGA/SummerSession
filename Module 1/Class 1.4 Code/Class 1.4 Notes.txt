@@ -1,0 +1,457 @@
+Timers and Scheduling
+
+
+
+
+6:00-6:30 Instructor Prep
+6:30-7:00 Student Prep
+
+
+
+7:00-7:10 Jeff Intro
+
+7:10-7:35 Part 1
+
+7:35-7:40 <BREAK>
+7:40-8:15 Part 2
+8:15-8:20 <BREAK>
+8:20-9:00 Part 3administrator     
+
+
+9:00-     Keyholder's Discretion
+
+
+
+
+================================================================
+
+Part 1: Review Previous Classes, Introduce Big Idea (It's about time), Show Built-In Timers and PWM
+
+================================================================
+
+    - [Jeff Intro]
+
+
+
+
+    - Review previous classes
+
+
+        - Class 1: We blinked an LED, and maybe learned a little bit about what we are doing when we "program"
+
+        - Class 2: We improved our blink sketch with Refactoring. We pushed buttons, and used interrupts. We talked about how delay is a bad thing.
+
+        - Class 3: We used morse code example to learn about grouping statements into functions, and using Libraries to make our life easier.
+
+
+
+     - This is the last "dedicated" programming class - although we'll be building up our programming skills throughout.        
+          - What have we done so far? We've blinked a light. We've blinked TWO lights. We've blinked a light IN CODE.
+          - For our next trick, we will blink a light... REALLY FAST
+          - Try not to get too excited - this is actually pretty cool though.
+
+
+     - Does everybody know about the Persistence of Vision effect?
+          - It's one of those wonderfully useful side-effects of our messy, inefficient optical wetware.
+          - Example: when you see a bright light, and there's an afterimage
+          - This is also what makes animation and movies possible
+
+
+     - Now, let's say we have an LED. It's on. How can we control the brightness?
+          - We can change the current; this is actually the most efficient way (energy-wise) to control brightness.
+          - It's also relatively hard to do - too much current will blow up the LED. 
+          - Too little current and it won't turn on. 
+          - Colors can shift at different currents (a big deal if you're mixing RGB). 
+          - Even the internal resistance of the LED can change (esp. if they get hot
+          - Finally, the brightness of the LED and the Current are far from a linear relationship. 
+          - There are serious diminishing returns involved in increasing current, and the range where brightness is visibly affected is pretty small.
+
+
+     - There must be a better way then, right? Of course there is (otherwise I just wasted everybody's time)
+          - Guesses? (think about what we talked about first)
+          - The answer: give it the full amount of current, but not all the time. Our eyes will fill in the blanks.
+
+
+     - This technique is called PWM - Pulse Width Modulation.
+          - Break it down: 
+               Pulse - this is the signal. 
+               Width - How long the signal is on. 
+               Modulation - We're turning it on and off (quickly).
+
+
+     [Present a variety of PWM duty cycles. Explain "duty cycle" as a % of time on, but always the same frequency]
+          
+
+
+
+     - So we create a PWM signal by controlling how long the signal is on, compared to how long it is off.
+
+
+     - Code Incoming. We're going to introduce a couple new concepts here. 
+          - One is the new arduino command, analogWrite(pin, value). It's pretty easy to understand. 0 = off, 255 = on, 127 = 50% duty cycle
+          - The other is a more fundamental programming concept, the "for" loop
+          - There are other types of loops (while, do) but the for loop is the most interesting/complex.
+          - Inside the parens, there are 3 main components: the initial state, the condition, and the iterator.
+               - Initial State: Self explanatory. We initialize a variable to some value.
+               - The Condition: This is a boolean expression, and the loop will continue as long as it remains true. 
+                    - We check this value each time we are about to start the loop again.
+               - The iterator: This command is run every time we complete the loop. 
+                    - Ideally, it will eventually cause the condition to become false.
+
+
+     - The canonical for loop is 'for (int x=0; x<something; x++) { . . . }' (x++ being a shortcut for 'x=x+1')
+         - The for loop we will use today is pretty much this, although we will run it in both directions.
+
+
+     [Demo Fade Sketch]
+
+
+     - Pretty cool. We're using quick on/off pulses to generate brightness, and it's good enough for smooth fading.
+     - We mentioned earlier that we can only do this on certain pins. Why don't other pins support it?
+          - To understand that, we need to understand what happens when we do e.g. analogWrite(ledPin, 127)
+     
+
+
+// theoretical stuff:
+
+
+     - We're telling the arduino that we want the signal to be on 50% of the time, off 50% of the time.
+          - Didn't we already do this with the blink sketch? Sure, but we did it 500ms at a time. When we do it ~1ms at a time, POV comes into play
+
+
+     - How can the arduino know to flip that LED every 1ms without us adding code to do that?
+
+          - Sidebar: we actually can do exactly that, explicitly in code, and get a similar effect. left as an exercise for the student.
+          - The answer is Timers
+
+
+     - Timers are a way for the arduino to know that a certain amount of time has passed. We have a function, millis(), that gives us this.
+          - Of course, if we had to constantly check millis, that would be no fun. 
+
+
+     - Instead, we use Timers, which do something very similar to Interrupts.
+          - To get a little technical: the timers count from 0-255... that's a byte. Or 8 bits. 0 would be 00000000, 255 would be 11111111. 127? 32?
+          - The timers vary in size, but they are always counting from 0-255 on that low-end byte.
+          - Each time the timer ticks, it compares its value to our analogWrite value. If it's <= to our value, it turns the pin on.
+               - Once it exceed this value, it turns the pin off. When it reaches 255 (about 2ms, 490hz) it starts back at 0.
+               - analogWrite(pin,0) and analogWrite(pin,255) disable this, and take a shortcut (they call digitalWrite and leave it at that)
+
+
+     - Phew! Got all that? Don't worry if not - while it's useful to have an idea of what's going on behind the scenes, we can make great use of analogWrite and similar stuff without understanding every little detail. (which is what's great about the arduino in the first place)
+
+
+Goals:
+Review previous concepts
+
+Introduce new concepts
+
+Run "Fade" sketch, discuss "for" loops
+
+
+Concepts:
+
+     "for" loop
+     analogRead()
+
+
+================================================================
+
+
+
+<BREAK><BREAK><BREAK><BREAK><BREAK><BREAK><BREAK><BREAK><BREAK>
+
+================================================================
+
+Part 2: Practical Application Part 1 - Reading analogWrite values (0-1024), and converting range for analogWrite (0-255)
+
+================================================================
+
+Abstract: Use "for" loop and analogWrite to fade an LED in and out
+
+
+
+- Ok, so we know that the arduino can write "analog" values (really just a fast digital wave). 
+     - Not surprisingly, it can read analog values too. But it doesn't just do the same trick in reverse!
+     - Reading analog values uses something called an ADC, or Analog-Digital-Converter.
+     - Analog pins each use an ADC. While analogWrite() is pretty easy to fake with manual "bit banging", analogRead() is nearly impossible to do without extra hardware
+     - This converter has a reference voltage, and an output scale (in our case, this is a 5v, 10bit ADC, for an output scale of 0-1024).
+
+
+     - analogRead() values are calculated by measuring the voltage as a percentage of the reference voltage (5v, but can be changed)
+          - It then figures out what fraction of the reference voltage this represents, and scales that value to 0-1023
+          - (e.g. 0v=0, 2.5v=511, 5v=1023)
+          - As usual, the physical reality of what's going on is a lot messier/more complicated. There are circuits called comparators
+
+
+     - Examples of devices that provide analog input: temp sensors, moisture sensors, light sensors, pressure sensors, flex sensors, pots, etc
+     - They all work on the same principle - they vary their internal resistance based on input.
+
+
+     - Not going to get into too much of the electronics theory here, but the idea is that there is a circuit called a "voltage divider"
+          - Voltage divider works by affecting the amount of voltage that goes to the output, vs. the amount that goes to ground
+          - Our "pull-up" button could be thought of as a voltage divider, where R2 is either ~0, or HUGE (airgap)
+          - For something with a little more subtlety, though, let's use a potentiometer.
+          - A potentiometer is like a "voltage divider in a box". It has three terminals, which correspond to Vin, Vout, and Ground in the diagram.
+          - In a potentimeter, R1 and R2 are like one big resistor, and Vout can move up and down them, "tapping" more or less voltage as it goes. 
+
+
+
+
+     [ Diagrams: Voltage divider and potentiometer ]
+  <-- Potentiometer   
+
+ 
+
+
+
+
+
+     - So by turning this potentiometer from one side to the other, we have a pretty direct way to affect how much voltage is read by the analog pins.
+
+
+     [ Show sketch to print out analog values as they are changed ]
+
+
+     - We can see the values change quite smoothly as we turn the knob. The arduino models the voltage  as an integer between 0 and 1023.
+
+
+
+     - Now that we have that value (we get a fresh one each time through the loop), we can use it to affect other parts of the program
+
+
+
+     - The obvious choice for feedback? LED! Remember we need to use an LED on a pin with PWM
+
+
+
+     - But, there's a problem! Our value is 0-1023, while our analogWrite function wants 0-255
+
+
+
+     - Functions (and "core" libraries) to the rescue! 
+
+
+
+     - Map is one of my favorite commands in Arduino core API. Converts values from one range to another
+
+
+
+     - It takes more arguments than any function we've used so far: 5. It also returns a value!
+
+
+
+     - The arguments it takes are: the number you have, the low end of that number's scale, the high end of that number's scale, then the low and high ends of the range you want to convert to.
+
+          - You will get back a new number, scaled to correspond to the same location in the new range.
+
+
+
+     [ Show code where we map from analog pins to pwm brightness ]
+
+
+
+     [ Show how we can swap out the LED for a small motor, and control speed ]
+
+
+
+     [ show off sketch to mix RGB with 3 knobs ]     
+
+
+
+
+
+
+
+     - Bonus question: What would happen if we hooked up a speaker?
+
+     - Answer: It will NOT change frequency, as one might assume. We will change the wave form, and give it a higher average volume, but frequency will stay the same (around 490hz)
+
+
+
+
+
+Goals:
+
+
+Concepts:
+     analogWrite()
+     map()
+
+
+
+    - New idea - We often need to convert values from one range to another. We'll see how Arduino's "map" function makes this easy.
+    - New idea - We want the processor to always be available for new input. Delay messes this up. Let's not delay at all.
+
+
+    - New idea - Arduino's PWM is driven by timers, behind the scenes. We will learn how these work, and show how we can use them directly.
+
+
+================================================================
+
+
+
+<BREAK>
+
+
+
+================================================================
+
+Part 3: Practical Application Part 2 - Blink without delay (fade without delay?)
+
+================================================================
+
+Abstract: blink or fade lights at different rates, while still allowing the potentiometer to affect brightness
+
+
+     - the technique of reading in one value, converting it, and using it to set another value, is a technique we will use again and again when workin with our robot.
+
+
+     - we still have a problem though. we're still using delay to schedule things. this technique works fine for single-purpose activities, but a robot must always be reacting in multiple ways - delay is no good!
+
+
+     - in fact, the "delay" method falls apart when trying to do something as simple as blink two lights at different rates - its a bad model for even moderately complex behavior
+
+
+     - Instead of "do something, wait, do something, wait" (the equivalent to staring at the clock in between tasks) we will instead use variables and millis() to keep track of how often a task should run, and run commands only at the appropriate time, never explicitly delaying (this is like setting an alarm on your watch/phone) (joke: young people don't know what a wristwatch is)
+
+
+     -lets go back to our blink sketch, and let's add our second light. for now, just make it blink along with the other one (you can use some of the same variables for now)
+
+
+     [Load blink sketch and add a second led)
+
+
+     - Now, how do we make these work independently? It's not easy with this linear processing model. We need a model for asynchronous processing.
+
+     
+
+          - (difference between synchronous and asynchronous: sync waits for each command to complete. async runs when it needs to. e.g. interrupts are async.)
+
+          - technically interrupts are much more async that this, but it qualifies, and is effectively async
+
+          - if you're curious, we're building towards a goal called "cooperative multitasking", (aka Just Do Your Job Then Get Out Of My Way) which will be very helpful in robotics module 
+
+
+
+     - We can blink an LED without delays, if we keep track of its pin, its state, how often to blink, and when we last changed state
+
+
+     - At a high level: If we record the time when we perform an action, we can later compare this to the current time, to see if enough time has passed to run it again
+
+
+     - For our next demo, we'll create two sets of vars to model two different LEDs
+
+
+     [ sketch to blink two LEDs at different rates ]
+
+
+     - We use the function "millis()" to get the number of milliseconds the sketch has been running (pro tip: micros() also exists and has 1000x the resolution, but is unreliable at higher ranges)
+
+
+
+     - But that's not all this technique lets you do! it frees up all those CPU cycles for processing inputs, as well (again, very important for robotics - can never be too rich, too thin, or have too many available CPU cycles)
+
+
+     [ sketch to set brightness and blinkInterval based on analog value ]
+
+
+     - We're starting to wrap up the programming module. Let's review all of the concepts we've covered to date:
+
+
+
+
+Programming ConceptsArduino Concepts
+Programming setup() 
+Sketch loop() 
+
+pinMode(pin, mode) 
+Variable digitalWrite(pin, state) 
+Function delay(ms) 
+Library 
+
+
+bool digitalRead(pin) 
+Statement 
+
+Expression
+
+
+Serial.begin(baud) 
+
+Serial.println(text) 
+Refactoring
+
+
+customFunctions(whatever) 
+Modeling
+
+
+AttachInterrupt(interrupt, handler, trigger) 
+Sync/Async
+
+
+
+
+
+int analogRead(pin) 
+Switch
+
+
+analogWrite(pin, value) 
+For loop
+
+
+int map(input, low1, high1, low2, high2) 
+If/Else
+
+
+millis() 
+
+
+
+Funky_Operators_(++/+=/!var) PWM
+
+
+
+= vs == ADC
+
+
+
+
+Timer
+
+
+
+Variable_Types_(int,bool,char) 
+
+
+- I'm sure all of you are getting a little tired of blinking LEDs. I promise we won't need to blink any more LEDs for a while.
+
+
+
+
+Goals: Learn how to use millis() to schedule jobs. Tease robot.
+
+
+Concepts:
+     millis()
+
+
+
+================================================================
+
+
+
+================================================================
+
+Errata: Introduction to Module 2
+
+(Note: Bring Roborto)
+
+================================================================
+
+
+
+================================================================
+
+

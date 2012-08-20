@@ -1,0 +1,78 @@
+Prep:
+- Pair LEDs and resistors (in addition to blinking on 13)
+- Collect/Count arduinos and breadboards
+- Write topic lists on the board: - section off board with topics along the sides, working area in the middle
+    function (setup/loop)
+    variable (int/long/float/double, bool, char/byte, string)
+    arduino API (digitalWrite, delay)
+- Way to broadcast screen? (hangouts on air?)
+- Downstairs sign? Prop door?
+- Download and cache Win/Lin/Mac Arudino 1.0.1 IDE and FTDI Drivers
+
+----------------------------------
+Section 1: Introduction to our classes (jeff)
+----------------------------------
+- Info about OlyMEGA
+  - Who We Do, What We Do
+- Explain class structure and future plans
+- Get people's IDEs set up
+- Get people arduinos that need them
+- Pitch for regular membership
+
+----------------------------------
+(5m) <break>
+----------------------------------
+
+----------------------------------
+Section 2: The Foundations of Programming (in 30 minutes)
+----------------------------------
+Note: Covering from ground up. if this is not new info for you, just nod knowingly when I mention it :)
+Note: If I leave something out, it's probably intentional
+
+- (10m) What are we doing when we "program" a computer
+  - Machine code -> assembly -> compilers -> interpreters
+  - Arduino is compiled
+  - Code runs on arduino, not pc, but can talk over serial
+  - Code vs Data, Instruction pointers. Jumping around either reading or executing locations in memory.
+
+- (10m) Brief history of arduino
+  - Detailed history of microcontrollers (j/k)
+  - Used to be wizard work
+  - Many cool platforms out there, but arduino best suited for a teaching environment (IMO)
+  - Why it was created, where and by whom
+  - Why it's different from other micros (community, libraries, bootloader, shields)
+  - So what can I do with an arduino? (Bridge the digital and physical worlds. Control lights. Run motors. Throw relays. Collect sensor data. Physical UIs. DIY game controllers.)
+  - Resources (arduino forums, Adafruit, examples)
+
+- (15m) Programming concepts
+  - What is a variable? (a place to store a value for reuse)
+    - What is an: (int/long/bool/byte/string/etc)
+  - What is a function (A place to store a chunk of code for reuse)
+    - We are writing functions, and also running others' functions 
+  - What is a constant? (talk bout common constants: true/false, high/low, input/output) - show in arduino source code?
+  - Misc Syntax - parens, semicolons, curly braces
+  - Assignment versus evaluation (=\==)
+  - What are some other concepts (loops, conditionals, arrays, math operators, boolean operators, objects) that we will cover later (maybe, If in doubt, do your own research)
+
+----------------------------------
+(5m) <break>
+----------------------------------
+
+----------------------------------
+Section 3: (justin)
+----------------------------------
+
+- (10m) Wiring API
+  - Structure of an arduino sketch (setup/loop)
+    - run once / run forever
+  - The Bread and butter of arduino sketches:
+    - digitalRead(pin)/digitalWrite(pin, state) (work on all pins)
+    - analogRead(pin)/analogWrite(pin, value) (read works only on analog pins, write works only on PWM pins)
+    - delay(ms) / delayMicroseconds(us)
+      - delay is like sitting there watching a clock until it hits the right time
+      - there are also multiple ways to 'set an alarm' - but we're not covering them today :)
+
+
+- (10m) In practice / follow along
+
+- (15m) Play around, try to blink two lights, etc

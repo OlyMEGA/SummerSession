@@ -1,0 +1,30 @@
+void dit()
+{
+    // Turn on for the length of one dit
+    digitalWrite(ledPin, HIGH);
+    delay(ditDuration);
+    digitalWrite(ledPin, LOW);   
+    
+    // Delay one dit after sending morse character
+    delay(ditDuration);
+}
+void dah()
+{
+    // Turn on for the length of one dah
+    digitalWrite(ledPin, HIGH);
+    delay(dahDuration);
+    digitalWrite(ledPin, LOW);   
+    
+    // Delay one dit after sending morse character
+    delay(ditDuration);
+}
+void endLetter()
+{
+    // Delay one dah after sending an entire letter
+    delay(dahDuration);
+}
+
+void space()
+{
+    delay(spaceDuration);
+}

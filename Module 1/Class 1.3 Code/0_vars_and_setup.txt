@@ -1,0 +1,21 @@
+//Variables
+int ledPin = 13;
+int ditDuration = 100;
+int dahDuration =  ditDuration * 3;
+int spaceDuration = ditDuration * 7; 
+
+
+// Loop (used for all sketches)
+void setup()
+{
+    pinMode(ledPin, OUTPUT);
+    Serial.begin(9600);
+    Serial.println("Starting up…");
+}
+
+void loop()
+{
+
+}
+
+
