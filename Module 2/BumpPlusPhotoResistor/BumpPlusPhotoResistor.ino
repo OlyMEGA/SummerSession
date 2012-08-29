@@ -7,7 +7,7 @@ Servo servoR;
 
 // YOU NEED TO UNCOMMENT ONE OF THESE LINES FOR THE SKETCH TO WORK
 //int switchPin = 2; // Uncomment if using Arduino Uno, Duemilanove, or Diecemila board
-int switchPin = 3; // Uncomment if using LeOlympia or other Leonardo-based board
+//int switchPin = 3; // Uncomment if using LeOlympia or other Leonardo-based board
 
 // Keep track of if we are in a "bumped" state
 bool isBumped = true;
