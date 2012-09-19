@@ -2,17 +2,21 @@ void setup()
 {
   Serial.begin(9600);
   setupController();
-  setupLights();
-  
+//  setupLights();  
 //  setupServo();
 }
 
 void loop()
 {
   loopController();
+//  loopLights();
+
+
+// Only use one of these!
 //  loopServo();
   loopMotor();
-  loopLights();
+  
+  
   // do any processing from here onwards
   // only use the local values unAuxIn, unThrottleIn and unSteeringIn, the shared
   // variables unAuxInShared, unThrottleInShared, unSteeringInShared are always owned by 
@@ -29,8 +33,6 @@ void loop()
   // but for a more complex project where a new signal requires significant processing
   // this allows us to only calculate new values when we have new inputs, rather than
   // on every cycle.
-
-
 
   bUpdateFlags = 0;
 }
