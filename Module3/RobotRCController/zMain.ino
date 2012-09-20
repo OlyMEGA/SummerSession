@@ -3,7 +3,7 @@ void setup()
   Serial.begin(9600);
   setupController();
 //  setupLights();  
-//  setupServo();
+  setupServo();
 }
 
 void loop()
@@ -13,8 +13,8 @@ void loop()
 
 
 // Only use one of these!
-//  loopServo();
-  loopMotor();
+  loopServo();
+//  loopMotor();
   
   
   // do any processing from here onwards

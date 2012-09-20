@@ -19,12 +19,12 @@
 #define RIGHT_MOTOR_PIN     6 // PWM - TIMER0
 #define RIGHT_MOTOR_DIR_PIN 7
 
-#define CHANNEL1 8 // R LR
-#define CHANNEL2 9 // R UD
-#define CHANNEL3 10 // L UD
-#define CHANNEL4 11 // L LR
-#define CHANNEL5 12 // Knob1
-#define CHANNEL6 13 // Knob2
+#define CHANNEL1 A0 // R LR
+#define CHANNEL2 A1 // R UD
+#define CHANNEL3 A2 // L UD
+#define CHANNEL4 A3 // L LR
+#define CHANNEL5 A4 // Knob1
+#define CHANNEL6 A5 // Knob2
 
 #define THROTTLE_IN_PIN CHANNEL3
 #define STEERING_IN_PIN CHANNEL1

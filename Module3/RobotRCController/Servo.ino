@@ -31,7 +31,7 @@ void loopServo()
   
   if(bUpdateFlags & THROTTLE_FLAG)
   {
-    throttleFactor = map(unThrottleIn, 1052, 1784, 0, 180);
+    throttleFactor = map(unThrottleIn, 1052, 1784, -255, 255);
 
     if ( abs(throttleFactor - lastThrottleFactor) > 20) {
       lastThrottleFactor = throttleFactor;
@@ -49,22 +49,38 @@ void loopServo()
     }
   }
 
-
   if(doit)
   {
       int leftSpeed, rightSpeed;
       if (steeringBias > 10) {
          rightSpeed = (float)throttleFactor * ((float)steeringBias / 100.0f);
-         leftSpeed = (throttleFactor < 0) ? -(-rightSpeed) : -(180-rightSpeed);
+         leftSpeed = (throttleFactor < 0) ? -(-rightSpeed) : -(255-rightSpeed);
       } else if (steeringBias < 4) {
          leftSpeed = -( (float)throttleFactor * ((float)steeringBias / 100.0f) );
-         rightSpeed = (throttleFactor < 0) ? -(0-leftSpeed) : -(180-leftSpeed);
+         rightSpeed = (throttleFactor < 0) ? -(-255-leftSpeed) : -(255-leftSpeed);
       } else {
          leftSpeed = throttleFactor;
          rightSpeed = throttleFactor; 
       }
 
+      rightSpeed = map(rightSpeed, -255, 255, 0, 180);
+      leftSpeed = map(leftSpeed, -255, 255, 0, 180);
+
       leftServo.write(leftSpeed);
       rightServo.write(rightSpeed);
+      
+      Serial.print("throttle: ");
+      Serial.print(throttleFactor);
+      
+      Serial.print(" steering: ");
+      Serial.print(steeringBias);
+      
+      Serial.print("leftSpeed: ");
+      Serial.print(leftSpeed);
+      
+      Serial.print(" right: ");
+      Serial.println(rightSpeed);
+      
+      
   }
 }
