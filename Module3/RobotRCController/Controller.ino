@@ -1,9 +1,20 @@
 void setupController()
 {
   // using the PinChangeInt library, attach the interrupts used to read the channels
-  PCintPort::attachInterrupt(THROTTLE_IN_PIN, calcThrottle,CHANGE); 
-  PCintPort::attachInterrupt(STEERING_IN_PIN, calcSteering,CHANGE); 
-  PCintPort::attachInterrupt(AUX_IN_PIN, calcAux,CHANGE); 
+//  PCintPort::attachInterrupt(THROTTLE_IN_PIN, calcThrottle,CHANGE); 
+//  PCintPort::attachInterrupt(STEERING_IN_PIN, calcSteering,CHANGE); 
+
+
+
+//// Leonardo settings - Channel3=>D2, Channel1=>D3
+//  attachInterrupt(0, calcSteering, CHANGE); 
+//  attachInterrupt(1, calcThrottle, CHANGE); 
+
+// Arduino settings - Channel3=>D2, Channel1=>D3.
+  attachInterrupt(0, calcThrottle, CHANGE); 
+  attachInterrupt(1, calcSteering, CHANGE); 
+
+//  PCintPort::attachInterrupt(AUX_IN_PIN, calcAux,CHANGE); 
 }
 
 void loopController()
@@ -29,19 +40,26 @@ void loopController()
     
     if(bUpdateFlags & AUX_FLAG) { 
       unAuxIn = unAuxInShared; 
-    }
-  
+    }  
      
     // clear shared copy of updated flags as we have already taken the updates
     // we still have a local copy if we need to use it in bUpdateFlags
-    bUpdateFlagsShared = 0;
+      bUpdateFlagsShared = 0;
 
     // as soon as interrupts are back on, we can no longer use the shared copies, the interrupt
     // service routines own these and could update them at any time. During the update, the 
     // shared copies may contain junk. Luckily we have our local copies to work with :-)
 
     interrupts(); // we have local copies of the inputs, so now we can turn interrupts back on
+    
+    Serial.print(" unthrottle: ");
+    Serial.print(unThrottleIn);      
+    Serial.print(" | unsteering: ");
+    Serial.print(unSteeringIn);
+    Serial.println("");
+
   }
+  delay(1);
 }
 
 // simple interrupt service routine

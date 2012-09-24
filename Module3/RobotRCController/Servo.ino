@@ -6,74 +6,54 @@ Servo rightServo;
 void setupServo()
 {
   leftServo.attach(leftServoPin);
-  rightServo.attach(rightServoPin);
-  
+  rightServo.attach(rightServoPin); 
 }
-
-void loopServo_old()
-{
-  if(bUpdateFlags & THROTTLE_FLAG) {
-    if(leftServo.readMicroseconds() != unThrottleIn) { 
-      leftServo.writeMicroseconds(unThrottleIn); 
-    }
-  }
-  if(bUpdateFlags & STEERING_FLAG) { 
-    if(rightServo.readMicroseconds() != unSteeringIn) {
-      rightServo.writeMicroseconds(unSteeringIn);
-    }
-  }
-}
-
 
 void loopServo()
 {
-  boolean doit = false;
+  boolean newDataDetected = false;
+  
   
   if(bUpdateFlags & THROTTLE_FLAG)
   {
+    newDataDetected = true;    
+
     throttleFactor = map(unThrottleIn, 1052, 1784, -255, 255);
     if (throttleFactor > 255) throttleFactor = 255;
     if (throttleFactor < -255) throttleFactor = -255;
 
-//    if ( abs(throttleFactor - lastThrottleFactor) > 50) {
-      lastThrottleFactor = throttleFactor;
-      doit = true;    
-//    }
+    lastThrottleFactor = throttleFactor;
   }  
 
   if(bUpdateFlags & THROTTLE_FLAG)
   {
+    newDataDetected = true;    
+
     steeringBias = map(unSteeringIn, 1272, 1632, -100, 100);    
-
-//    if ( abs(steeringBias - lastSteeringBias) > 2) {
-      lastSteeringBias = steeringBias;
-      doit = true;    
-//    }
+//    if (steeringBias > -100) steeringBias = 100;
+//    if (steeringBias < -100) steeringBias = -100;    
+    
+    lastSteeringBias = steeringBias;
   }
-//
-//PLUG IN TEH ROBOTZ!!!!!
-//Hello there...
-//would you like to play a game?
-//
-//how about global thermonuclear strip chess
-//
-
-  if(doit)
+  
+  
+  if(newDataDetected)
   {
       int leftSpeed, rightSpeed;
+
       if (steeringBias > 15) {
          rightSpeed = (float)throttleFactor * ((float)steeringBias / 100.0f);
-         leftSpeed = (throttleFactor < 0) ? -(255-rightSpeed) : -(255-rightSpeed);
+         leftSpeed = (throttleFactor < 0) ? (255-rightSpeed) : (255-rightSpeed);
       } else if (steeringBias < 5) {
          leftSpeed = -( (float)throttleFactor * ((float)steeringBias / 100.0f) );
-         rightSpeed = (throttleFactor < 0) ? -(255-leftSpeed) : -(255-leftSpeed);
+         rightSpeed = (throttleFactor < 0) ? (255-leftSpeed) : (255-leftSpeed);
       } else {
          leftSpeed = throttleFactor;
          rightSpeed = throttleFactor; 
       }
 
-      rightSpeed = map(rightSpeed, -255, 255, 0, 180), 0, 180;
-      leftSpeed = map(leftSpeed, -255, 255, 0, 180), 0, 180;
+      rightSpeed = map(rightSpeed, -255, 255, 180, 0);
+      leftSpeed = map(leftSpeed, -255, 255, 0, 180);
       
       if (rightSpeed < 0) rightSpeed = 0;
       if (rightSpeed > 180) rightSpeed = 180;
@@ -83,30 +63,16 @@ void loopServo()
       if (leftSpeed > 180) leftSpeed = 180;
       if (leftSpeed >= 85 && leftSpeed <= 95) leftSpeed = 90;
       
-      
       leftServo.write(leftSpeed);
       rightServo.write(rightSpeed);
-      
-      
-      Serial.print(" unthrottle: ");
-      Serial.print(unThrottleIn);
-      
-      Serial.print("unsteering: ");
-      Serial.print(unSteeringIn);
-      
-      
-      Serial.print(" throttle: ");
-      Serial.print(throttleFactor);
-      
-      Serial.print(" steering: ");
-      Serial.print(steeringBias);
-      
-      Serial.print(" leftSpeed: ");
-      Serial.print(leftSpeed);
-      
-      Serial.print(" right: ");
-      Serial.println(rightSpeed);
-      
-      
+          
+//      Serial.print(" | throttle: ");
+//      Serial.print(throttleFactor);
+//      Serial.print(" | steering: ");
+//      Serial.print(steeringBias);
+//      Serial.print(" | leftSpeed: ");
+//      Serial.print(leftSpeed);
+//      Serial.print(" | right: ");
+//      Serial.println(rightSpeed);
   }
 }

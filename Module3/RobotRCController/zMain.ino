@@ -1,6 +1,15 @@
 void setup()
 {
+  
+  // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
+
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for Leonardo only
+  }
+
+  Serial.print("starting up");
+  
   setupController();
 //  setupLights();  
   setupServo();
@@ -11,11 +20,9 @@ void loop()
   loopController();
 //  loopLights();
 
-
 // Only use one of these!
   loopServo();
 //  loopMotor();
-  
   
   // do any processing from here onwards
   // only use the local values unAuxIn, unThrottleIn and unSteeringIn, the shared
